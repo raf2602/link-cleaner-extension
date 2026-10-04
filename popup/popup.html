@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Link Cleaner</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img src="../icons/icon48.png" alt="" width="34" height="34">
+          <div>
+            <h1>Link Cleaner</h1>
+            <p>Share the page, not the trackers.</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" id="historyButton" type="button" title="Recent links" aria-label="Recent links">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8m0-5v5h5M12 7v5l3 2"/></svg>
+          </button>
+          <button class="icon-button" id="settingsButton" type="button" title="Settings" aria-label="Settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <nav class="mode-switch" aria-label="Cleaning mode">
+        <button class="mode-button active" data-mode="single" type="button">One link</button>
+        <button class="mode-button" data-mode="bulk" type="button">Bulk clean</button>
+      </nav>
+
+      <section id="singlePanel" class="panel">
+        <div class="field-heading">
+          <label for="inputUrl">Link to clean</label>
+          <div class="field-tools">
+            <button class="text-button" id="useTabButton" type="button">Use tab</button>
+            <button class="text-button" id="pasteButton" type="button">Paste</button>
+          </div>
+        </div>
+        <textarea id="inputUrl" rows="3" spellcheck="false" placeholder="Paste a link here…"></textarea>
+
+        <div id="resultCard" class="result-card" aria-live="polite">
+          <div class="result-topline">
+            <span class="result-label">Clean link</span>
+            <span id="resultSummary" class="summary-chip">Ready</span>
+          </div>
+          <p id="outputUrl" class="output-url">Your cleaned link will appear here.</p>
+          <div id="changeList" class="change-list"></div>
+        </div>
+
+        <p id="errorMessage" class="error-message" role="alert" hidden></p>
+
+        <button id="copyButton" class="primary-button" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+          <span>Copy clean link</span>
+        </button>
+        <div class="secondary-actions">
+          <button id="replaceButton" class="secondary-button" type="button" disabled>Replace tab</button>
+          <button id="openButton" class="secondary-button" type="button" disabled>Open new tab</button>
+        </div>
+      </section>
+
+      <section id="bulkPanel" class="panel" hidden>
+        <div class="field-heading">
+          <label for="bulkInput">Links, one per line</label>
+          <button class="text-button" id="bulkPasteButton" type="button">Paste</button>
+        </div>
+        <textarea id="bulkInput" class="bulk-textarea" rows="7" spellcheck="false" placeholder="https://example.com/?utm_source=newsletter&#10;https://youtu.be/…?si=…"></textarea>
+        <div class="bulk-summary">
+          <span id="bulkCount">0 links</span>
+          <span id="bulkRemoved">0 parameters removed</span>
+        </div>
+        <button id="bulkCopyButton" class="primary-button" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+          <span>Copy cleaned links</span>
+        </button>
+      </section>
+
+      <section id="historyPanel" class="history-panel" hidden>
+        <div class="history-heading">
+          <div>
+            <span class="eyebrow">On this device</span>
+            <h2>Recent links</h2>
+          </div>
+          <button id="clearHistoryButton" class="text-button danger" type="button">Clear</button>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+
+      <footer>
+        <span class="privacy-dot"></span>
+        Cleaned privately in your browser
+        <kbd>Alt ⇧ C</kbd>
+      </footer>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

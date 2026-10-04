@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Link Cleaner settings</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../icons/icon128.png" alt="" width="58" height="58">
+        <div>
+          <span class="eyebrow">Link Cleaner</span>
+          <h1>Make clean links your own.</h1>
+          <p>Everything here stays in Chrome and syncs with your browser profile.</p>
+        </div>
+      </header>
+
+      <form id="settingsForm">
+        <section class="card">
+          <div class="section-heading">
+            <span class="section-number">01</span>
+            <div><h2>Link conversions</h2><p>Optional formatting for popular sharing sites.</p></div>
+          </div>
+          <div class="setting-row">
+            <div><label for="shortenYouTube">Shorten YouTube videos</label><p>Use the compact youtu.be format while retaining timestamps and playlists.</p></div>
+            <input class="switch" type="checkbox" id="shortenYouTube">
+          </div>
+          <div class="setting-row">
+            <div><label for="convertYouTubeShorts">Open Shorts as regular videos</label><p>Convert /shorts/ links to the standard watch page.</p></div>
+            <input class="switch" type="checkbox" id="convertYouTubeShorts">
+          </div>
+          <div class="setting-row">
+            <div><label for="convertYouTubeMusic">Use regular YouTube for Music links</label><p>Change music.youtube.com links to youtube.com.</p></div>
+            <input class="switch" type="checkbox" id="convertYouTubeMusic">
+          </div>
+          <div class="setting-row">
+            <div><label for="fixTwitter">Use FxTwitter for X/Twitter posts</label><p>Improves rich previews in chat and social apps.</p></div>
+            <input class="switch" type="checkbox" id="fixTwitter">
+          </div>
+          <div class="setting-row">
+            <div><label for="fixBluesky">Use FxBluesky for Bluesky posts</label><p>Improves rich previews in chat and social apps.</p></div>
+            <input class="switch" type="checkbox" id="fixBluesky">
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-heading">
+            <span class="section-number">02</span>
+            <div><h2>Fine tuning</h2><p>Keep the small pieces that matter to you.</p></div>
+          </div>
+          <div class="setting-row">
+            <div><label for="preserveHash">Preserve page anchors</label><p>Keeps links that jump to a heading or section on the page.</p></div>
+            <input class="switch" type="checkbox" id="preserveHash">
+          </div>
+          <div class="setting-row">
+            <div><label for="strictMode">Strict cleaning</label><p>Remove every unrecognised parameter. More thorough, but filter and search links may break.</p></div>
+            <input class="switch" type="checkbox" id="strictMode">
+          </div>
+          <div class="setting-block">
+            <label for="amazonId">Amazon affiliate tracking ID</label>
+            <p>Add your own tag to cleaned Amazon product links. Leave blank to add none.</p>
+            <input class="text-input" id="amazonId" type="text" autocomplete="off" placeholder="example-20">
+          </div>
+          <div class="setting-block">
+            <label for="customKeepParams">Always keep these parameters</label>
+            <p>Comma-separated names for sites that need a parameter Link Cleaner doesn't know yet.</p>
+            <input class="text-input" id="customKeepParams" type="text" autocomplete="off" placeholder="lang, view, item">
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-heading">
+            <span class="section-number">03</span>
+            <div><h2>Privacy</h2><p>Cleaning always happens locally.</p></div>
+          </div>
+          <div class="setting-row">
+            <div><label for="historyEnabled">Keep a recent-links list</label><p>Stores up to 20 cleaned links on this device. Links are never uploaded.</p></div>
+            <input class="switch" type="checkbox" id="historyEnabled">
+          </div>
+          <button id="clearHistory" class="subtle-button" type="button">Clear recent links</button>
+        </section>
+
+        <div class="save-bar">
+          <span id="saveStatus" aria-live="polite">Changes save automatically</span>
+          <button id="resetButton" class="subtle-button" type="button">Restore defaults</button>
+        </div>
+      </form>
+    </main>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>
